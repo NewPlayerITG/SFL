@@ -1,0 +1,126 @@
+/* Основные настройки страницы */
+/* Основные настройки страницы */
+body {
+    background-color: #0A170F;
+    color: #FAFAFA;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    height: 100vh; /* Жестко фиксируем высоту ровно по экрану */
+    margin: 0;
+    overflow: hidden; /* НОВОЕ: Полностью запрещаем любые полосы прокрутки */
+}
+
+/* Настройки для каждого экрана */
+.screen {
+    position: relative; /* Чтобы заголовок позиционировался ровно по этому экрану */
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Выравнивает кнопки строго по центру */
+    align-items: center;
+    animation: fadeIn 0.4s ease-out forwards; 
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* === НОВОЕ: Блок с текстами (прибит к верху) === */
+.header {
+    position: absolute;
+    top: 15vh; /* Отступ от верхнего края экрана (15% от высоты) */
+    width: 100%;
+    text-align: center;
+    padding: 0 20px; /* Чтобы текст не прилипал к краям на узких телефонах */
+    box-sizing: border-box;
+}
+
+/* === НОВОЕ: Контейнер для кнопок === */
+.buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Тексты */
+h1 {
+    color: #C2D6C8; 
+    margin: 0 0 10px 0; /* Убрали лишние отступы, чтобы было ровно */
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.greeting {
+    color: #FAFAFA;
+}
+
+p {
+    margin: 0;
+    font-size: 22px;
+    color: #C2D6C8;
+    font-weight: 500;
+}
+
+/* Настройка кнопок */
+button {
+    background-color: #7D9C87;
+    color: #0A170F;
+    border: none;
+    border-radius: 16px;
+    padding: 22px 40px;
+    font-size: 22px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    width: 90%;
+    max-width: 480px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background-color: #C2D6C8;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+button:active {
+    transform: translateY(2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Кнопка "Назад" */
+#btn-back {
+    position: fixed; 
+    bottom: 30px;
+    left: 30px;
+    width: auto;
+    background-color: #437050;
+    color: #FAFAFA;
+    padding: 16px 30px;
+    font-size: 18px;
+    border-radius: 12px;
+    z-index: 100; /* Чтобы всегда была поверх других элементов */
+}
+
+#btn-back:hover {
+    background-color: #558A64;
+    color: #FAFAFA;
+}
+
+/* Плавная анимация */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

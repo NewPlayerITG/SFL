@@ -1,1 +1,71 @@
-<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><title>Мой сайт</title></head><body><h1>Привет! Это мой первый сайт, и он работает без сервера!</h1></body></html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор досуга</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="screen-main" class="screen">
+        <div class="header">
+            <h1 class="greeting">Доброго времени суток</h1>
+            <p>Что бы вы хотели сегодня выбрать?</p>
+        </div>
+        <div class="buttons">
+            <button onclick="navigate('screen-fun')">Развлечения</button>
+            <button onclick="navigate('screen-food')">Еда</button>
+            <button onclick="navigate('screen-gifts')">Подарки</button>
+        </div>
+    </div>
+
+    <div id="screen-fun" class="screen hidden">
+        <div class="header">
+            <h1>Куда идем?</h1>
+        </div>
+        <div class="buttons">
+            <button onclick="navigate('screen-finish')">Гулять</button>
+            <button onclick="navigate('screen-finish')">Ходить по торговому центру</button>
+            <button onclick="navigate('screen-finish')">Поехали!</button>
+        </div>
+    </div>
+
+    <div id="screen-food" class="screen hidden">
+        <div class="header">
+            <h1>Какую кухню вы хотите сегодня?</h1>
+        </div>
+        <div class="buttons">
+            <button onclick="navigate('screen-finish')">Кавказская</button>
+            <button onclick="navigate('screen-finish')">Японская</button>
+            <button onclick="navigate('screen-finish')">Русская</button>
+            <button onclick="navigate('screen-finish')">Американская</button>
+        </div>
+    </div>
+
+    <div id="screen-gifts" class="screen hidden">
+        <div class="header">
+            <h1>Подарки</h1>
+        </div>
+        <div class="buttons">
+            <button onclick="navigate('screen-finish')">Цветы</button>
+            <button onclick="navigate('screen-finish')">Игрушки</button>
+            <button onclick="navigate('screen-finish')">Билеты</button>
+            <button onclick="navigate('screen-finish')">Другое</button>
+        </div>
+    </div>
+
+    <div id="screen-finish" class="screen hidden">
+        <div class="header">
+            <h1>Ждите, идет ремонт 🚧</h1>
+        </div>
+    </div>
+
+    <button id="btn-back" class="hidden" onclick="goBack()">Назад</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
