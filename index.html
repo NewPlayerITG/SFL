@@ -11,6 +11,15 @@
 </head>
 <body>
 
+    <div id="toast-notification" class="toast-notification"></div>
+
+    <button id="btn-profile" onclick="openAuthModal()">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="#7D9C87"/>
+        </svg>
+        <span id="profile-label" class="hidden"></span>
+    </button>
+
     <div id="screen-main" class="screen">
         <div class="header">
             <h1 class="greeting">Доброго времени суток</h1>
@@ -24,9 +33,7 @@
     </div>
 
     <div id="screen-fun" class="screen hidden">
-        <div class="header">
-            <h1>Куда идем?</h1>
-        </div>
+        <div class="header"><h1>Куда идем?</h1></div>
         <div class="buttons">
             <button onclick="navigate('screen-finish')">Гулять</button>
             <button onclick="navigate('screen-finish')">Ходить по торговому центру</button>
@@ -35,36 +42,135 @@
     </div>
 
     <div id="screen-food" class="screen hidden">
-        <div class="header">
-            <h1>Какую кухню вы хотите сегодня?</h1>
-        </div>
+        <div class="header"><h1>Какую кухню вы хотите сегодня?</h1></div>
         <div class="buttons">
             <button onclick="navigate('screen-finish')">Кавказская</button>
-            <button onclick="navigate('screen-finish')">Японская</button>
             <button onclick="navigate('screen-finish')">Русская</button>
+            <button onclick="navigate('screen-finish')">Японская</button>
+            <button onclick="navigate('screen-finish')">Итальянская</button>
             <button onclick="navigate('screen-finish')">Американская</button>
+            <button onclick="navigate('screen-finish')">Рыбная</button>
         </div>
     </div>
 
     <div id="screen-gifts" class="screen hidden">
-        <div class="header">
-            <h1>Подарки</h1>
-        </div>
+        <div class="header"><h1>Подарки</h1></div>
         <div class="buttons">
-            <button onclick="navigate('screen-finish')">Цветы</button>
+            <button onclick="openFlowersSection()">Цветы</button>
             <button onclick="navigate('screen-finish')">Игрушки</button>
             <button onclick="navigate('screen-finish')">Билеты</button>
             <button onclick="navigate('screen-finish')">Другое</button>
         </div>
     </div>
 
+    <div id="screen-flowers" class="screen hidden">
+        <div class="header-gallery">
+            <h1>Выберите цветы</h1>
+        </div>
+        <div class="gallery-wrapper">
+            <div id="flowers-gallery" class="gallery-grid"></div>
+        </div>
+    </div>
+
     <div id="screen-finish" class="screen hidden">
         <div class="header">
-            <h1>Ждите, идет ремонт 🚧</h1>
+            <h1>Приносим свои извинения. Идет ремонт 🚧</h1>
+        </div>
+        <div class="buttons">
+            <button id="btn-choose-date" onclick="openCalendar('edit')">Выбрать дату</button>
         </div>
     </div>
 
     <button id="btn-back" class="hidden" onclick="goBack()">Назад</button>
+    <button id="btn-calendar" onclick="openCalendar('view')">📅</button>
+
+    <div id="auth-modal" class="modal-overlay hidden" onclick="closeAuthOverlay(event)">
+        <div id="auth-view-login" class="modal-content auth-box hidden">
+            <div class="auth-title">Вход в систему</div>
+            <input type="text" id="login-username" class="auth-input" placeholder="Логин">
+            <input type="password" id="login-password" class="auth-input" placeholder="Пароль">
+            <div class="auth-footer-row">
+                <button class="btn-secondary" onclick="switchAuthView('register')">Зарегистрироваться</button>
+                <button class="btn-primary" onclick="handleLoginSubmit()">Войти</button>
+            </div>
+        </div>
+
+        <div id="auth-view-register" class="modal-content auth-box hidden">
+            <div class="auth-title">Регистрация</div>
+            <div class="auth-stack">
+                <input type="text" id="reg-username" class="auth-input" placeholder="Логин">
+                <input type="password" id="reg-password" class="auth-input" placeholder="Пароль">
+                <input type="text" id="reg-name" class="auth-input" placeholder="Как к вам обращаться?">
+            </div>
+            <div class="auth-footer-row spaced">
+                <button class="btn-secondary" onclick="switchAuthView('login')">Назад</button>
+                <button class="btn-primary" onclick="handleRegisterSubmit()">Сохранить</button>
+            </div>
+        </div>
+
+        <div id="auth-view-profile" class="modal-content auth-box hidden">
+            <div class="auth-title" id="profile-greeting">Привет, Пользователь!</div>
+            <p style="font-size: 14px; color: #7D9C87; text-align: center; margin-bottom: 20px;">Вы успешно авторизованы. Ваши даты синхронизированы.</p>
+            <button class="btn-primary" onclick="openCalendar('view')" style="width: 100%; margin-bottom: 10px;">Посмотреть мои планы</button>
+            <button class="btn-danger" onclick="handleLogout()" style="width: 100%;">Выйти из аккаунта</button>
+        </div>
+    </div>
+
+    <div id="calendar-modal" class="modal-overlay hidden" onclick="closeCalendarOverlay(event)">
+        <div class="modal-content">
+            <div class="calendar-header">
+                <button onclick="changeMonth(-1)">‹</button>
+                <span id="calendar-month-year"></span>
+                <button onclick="changeMonth(1)">›</button>
+            </div>
+            <div class="calendar-weekdays">
+                <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div>
+            </div>
+            <div id="calendar-days" class="calendar-days"></div>
+            <div class="modal-divider"></div>
+
+            <div id="calendar-view-mode" class="hidden">
+                <div id="event-details-text">Выберите день, чтобы посмотреть планы.</div>
+            </div>
+
+            <div id="calendar-edit-mode">
+                <div class="time-picker-title">Выберите время (кликните для ввода)</div>
+                <div class="time-picker-container">
+                    <div class="time-wheel-wrapper">
+                        <div class="wheel-label">Часы</div>
+                        <div class="wheel-relative-container">
+                            <div id="wheel-hours" class="time-wheel"></div>
+                            <input type="number" id="input-hours" class="wheel-input hidden" min="0" max="23" placeholder="00">
+                        </div>
+                    </div>
+                    <div class="time-wheel-separator">:</div>
+                    <div class="time-wheel-wrapper">
+                        <div class="wheel-label">Минуты</div>
+                        <div class="wheel-relative-container">
+                            <div id="wheel-minutes" class="time-wheel"></div>
+                            <input type="number" id="input-minutes" class="wheel-input hidden" min="0" max="59" placeholder="00">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="calendar-footer">
+                    <button id="btn-reset-date" onclick="resetDateSelection()">Очистить</button>
+                    <button id="btn-save-date" onclick="saveDateSelection()">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="flower-modal" class="modal-overlay hidden" onclick="closeFlowerModal(event)">
+        <div class="flower-modal-content" onclick="event.stopPropagation()">
+            <img id="flower-modal-img" src="" alt="Цветок" class="flower-modal-image">
+            <div class="flower-modal-info">
+                <h2 id="flower-modal-title" class="flower-modal-title">Название</h2>
+                <p id="flower-modal-desc" class="flower-modal-text">Здесь будет длинное описание...</p>
+                <button class="btn-large-action" onclick="chooseFlowerAndGoToDate()">Выбрать</button>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
