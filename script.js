@@ -310,25 +310,27 @@ function setupWheelDragAndType(wheel, input, maxVal) {
 
 // ТОЧНАЯ БАЗА ДАННЫХ ЦВЕТОВ (Использует файлы 1.jpg - 18.jpg из твоей папки images)
 const flowersData = [
-    { id: 1, name: "Кустовая роза", shortDesc: "Изящное соцветие", longDesc: "Пышные кустовые розы, создающие ощущение праздничной лёгкости и уюта.", image: "images/1.jpg" },
-    { id: 2, name: "Гвоздика", shortDesc: "Классическая стойкость", longDesc: "Стойкие и изящные цветы с богатой палитрой оттенков.", image: "images/2.jpg" },
-    { id: 3, name: "Альстромерия", shortDesc: "Перуанская лилия", longDesc: "Яркие и нежные лепестки, которые долго сохраняют свежесть.", image: "images/3.jpg" },
-    { id: 4, name: "Георгин", shortDesc: "Осеннее великолепие", longDesc: "Крупные, геометрически идеальные бутоны для роскошных композиций.", image: "images/4.jpg" },
-    { id: 5, name: "Гортензия", shortDesc: "Облако нежности", longDesc: "Объемное соцветие, напоминающее лёгкое воздушное облако.", image: "images/5.jpg" },
-    { id: 6, name: "Лилия", shortDesc: "Королевский шарм", longDesc: "Благородный цветок с утончённым силуэтом и глубоким ароматом.", image: "images/6.jpg" },
-    { id: 7, name: "Мимоза", shortDesc: "Весеннее солнце", longDesc: "Яркие пушистые соцветия, дарящие весеннее тепло и радость.", image: "images/7.jpg" },
-    { id: 8, name: "Пионы", shortDesc: "Пышный шик", longDesc: "Невероятно востребованные и ароматные многослойные бутоны.", image: "images/8.jpg" },
-    { id: 9, name: "Подсолнух", shortDesc: "Энергия солнца", longDesc: "Яркий, жизнерадостный цветок, привносящий позитив в любой дом.", image: "images/9.jpg" },
-    { id: 10, name: "Протея", shortDesc: "Экзотический центр", longDesc: "Уникальный доминантный цветок для ценителей высокой флористики.", image: "images/10.jpg" },
-    { id: 11, name: "Одноголовая роза", shortDesc: "Классический выбор", longDesc: "Идеальный крупный бутон на высоком элегантном стебле.", image: "images/11.jpg" },
-    { id: 12, name: "Пионовидная роза", shortDesc: "Французский стиль", longDesc: "Изысканное сочетание классической розы и пышной текстуры пиона.", image: "images/12.jpg" },
-    { id: 13, name: "Ромашка", shortDesc: "Полевая искренность", longDesc: "Милые садовые ромашки, создающие атмосферу тепла и уюта.", image: "images/13.jpg" },
-    { id: 14, name: "Сирень", shortDesc: "Весенний шлейф", longDesc: "Пышные ароматные веточки с незабываемым ностальгическим запахом.", image: "images/14.jpg" },
-    { id: 15, name: "Тюльпан", shortDesc: "Свежесть утра", longDesc: "Хрустящие сочные стебли и нежные классические бутоны.", image: "images/15.jpg" },
-    { id: 16, name: "Хризантема", shortDesc: "Абсолютная стойкость", longDesc: "Пышный цветок, способный оставаться свежим в вазе рекордное время.", image: "images/16.jpg" },
-    { id: 17, name: "Экзотика", shortDesc: "Тропический микс", longDesc: "Редкие декоративные растения для самых необычных букетов.", image: "images/17.jpg" },
-    { id: 18, name: "Букет", shortDesc: "Авторская сборка", longDesc: "Гармоничная композиция, собранная профессиональным флористом.", image: "images/18.jpg" }
+    { id: 1, name: "Кустовая роза", shortDesc: "Изящное соцветие", longDesc: "Пышные кустовые розы, создающие ощущение праздничной лёгкости и уюта.", image: "images/1", colors: [{hex: "#D32F2F", name: "Красный"}, {hex: "#FAFAFA", name: "Белый"}, {hex: "#F48FB1", name: "Нежно-розовый"}, {hex: "#FBC02D", name: "Желтый"}, {hex: "#FFAB91", name: "Персиковый"}] },
+    { id: 2, name: "Гвоздика", shortDesc: "Классическая стойкость", longDesc: "Стойкие и изящные цветы с богатой палитрой оттенков.", image: "images/2", colors: [{hex: "#C62828", name: "Красный"}, {hex: "#FAFAFA", name: "Белый"}, {hex: "#F06292", name: "Розовый"}, {hex: "#880E4F", name: "Бордовый"}, {hex: "#FFF176", name: "Светло-желтый"}, {hex: "#E1BEE7", name: "Сиреневый"}] },
+    { id: 3, name: "Альстромерия", shortDesc: "Перуанская лилия", longDesc: "Яркие и нежные лепестки, которые долго сохраняют свежесть.", image: "images/3", colors: [{hex: "#FAFAFA", name: "Белый"}, {hex: "#EC407A", name: "Малиновый"}, {hex: "#FFEE58", name: "Желтый"}, {hex: "#FFA726", name: "Оранжевый"}, {hex: "#AB47BC", name: "Фиолетовый"}] },
+    { id: 4, name: "Георгин", shortDesc: "Осеннее великолепие", longDesc: "Крупные, геометрически идеальные бутоны для роскошных композиций.", image: "images/4", colors: [{hex: "#880E4F", name: "Темно-бордовый"}, {hex: "#D32F2F", name: "Красный"}, {hex: "#FF4081", name: "Ярко-розовый"}, {hex: "#FFEB3B", name: "Желтый"}, {hex: "#FAFAFA", name: "Белый"}, {hex: "#FF9800", name: "Оранжевый"}] },
+    { id: 5, name: "Гортензия", shortDesc: "Облако нежности", longDesc: "Объемное соцветие, напоминающее лёгкое воздушное облако.", image: "images/5", colors: [{hex: "#64B5F6", name: "Небесно-голубой"}, {hex: "#F48FB1", name: "Розовый"}, {hex: "#FAFAFA", name: "Белый"}, {hex: "#CE93D8", name: "Сиреневый"}, {hex: "#DCE775", name: "Лаймовый (зеленоватый)"}] },
+    { id: 6, name: "Лилия", shortDesc: "Королевский шарм", longDesc: "Благородный цветок с утончённым силуэтом и глубоким ароматом.", image: "images/6", colors: [{hex: "#FAFAFA", name: "Белый"}, {hex: "#F48FB1", name: "Розовый"}, {hex: "#FFF176", name: "Желтый"}, {hex: "#FFB74D", name: "Оранжевый"}, {hex: "#B71C1C", name: "Темно-красный"}] },
+    { id: 7, name: "Мимоза", shortDesc: "Весеннее солнце", longDesc: "Яркие пушистые соцветия, дарящие весеннее тепло и радость.", image: "images/7", colors: [{hex: "#FFEA00", name: "Ярко-желтый"}, {hex: "#FFEE58", name: "Светло-желтый"}, {hex: "#FFC107", name: "Золотистый"}] },
+    { id: 8, name: "Пионы", shortDesc: "Пышный шик", longDesc: "Невероятно востребованные и ароматные многослойные бутоны.", image: "images/8", colors: [{hex: "#F8BBD0", name: "Нежно-розовый"}, {hex: "#FAFAFA", name: "Белый"}, {hex: "#D81B60", name: "Малиновый"}, {hex: "#FF8A65", name: "Коралловый"}, {hex: "#880E4F", name: "Винный"}] },
+    { id: 9, name: "Подсолнух", shortDesc: "Энергия солнца", longDesc: "Яркий, жизнерадостный цветок, привносящий позитив в любой дом.", image: "images/9", colors: [{hex: "#FFEB3B", name: "Классический желтый"}, {hex: "#FFC107", name: "Оранжево-желтый"}, {hex: "#5D4037", name: "Коричнево-красный (декоративный)"}] },
+    { id: 10, name: "Протея", shortDesc: "Экзотический центр", longDesc: "Уникальный доминантный цветок для ценителей высокой флористики.", image: "images/10", colors: [{hex: "#F8BBD0", name: "Светло-розовый"}, {hex: "#F06292", name: "Насыщенно-розовый"}, {hex: "#880E4F", name: "Бордовый"}, {hex: "#FAFAFA", name: "Белый"}] },
+    { id: 11, name: "Одноголовая роза", shortDesc: "Классический выбор", longDesc: "Идеальный крупный бутон на высоком элегантном стебле.", image: "images/11", colors: [{hex: "#D32F2F", name: "Красный"}, {hex: "#FAFAFA", name: "Белый"}, {hex: "#F06292", name: "Розовый"}, {hex: "#880E4F", name: "Бордовый"}, {hex: "#FFCCBC", name: "Персиковый"}] },
+    { id: 12, name: "Пионовидная роза", shortDesc: "Французский стиль", longDesc: "Изысканное сочетание классической розы и пышной текстуры пиона.", image: "images/12", colors: [{hex: "#F8BBD0", name: "Пудрово-розовый"}, {hex: "#FFE0B2", name: "Кремово-персиковый"}, {hex: "#E91E63", name: "Малиновый"}, {hex: "#FAFAFA", name: "Белый"}, {hex: "#D32F2F", name: "Красный"}] },
+    { id: 13, name: "Ромашка", shortDesc: "Полевая искренность", longDesc: "Милые садовые ромашки, создающие атмосферу тепла и уюта.", image: "images/13", colors: [{hex: "#FAFAFA", name: "Белая (классика)"}, {hex: "#FFEB3B", name: "Желтая"}, {hex: "#F48FB1", name: "Светло-розовая (пиретрум)"}] },
+    { id: 14, name: "Сирень", shortDesc: "Весенний шлейф", longDesc: "Пышные ароматные веточки с незабываемым ностальгическим запахом.", image: "images/14", colors: [{hex: "#E1BEE7", name: "Светло-сиреневый"}, {hex: "#AB47BC", name: "Насыщенный сиреневый"}, {hex: "#7B1FA2", name: "Пурпурный"}, {hex: "#FAFAFA", name: "Белый"}] },
+    { id: 15, name: "Тюльпан", shortDesc: "Свежесть утра", longDesc: "Хрустящие сочные стебли и нежные классические бутоны.", image: "images/15", colors: [{hex: "#D32F2F", name: "Красный"}, {hex: "#FFEB3B", name: "Желтый"}, {hex: "#FAFAFA", name: "Белый"}, {hex: "#F06292", name: "Розовый"}, {hex: "#8E24AA", name: "Фиолетовый"}, {hex: "#FF9800", name: "Оранжевый"}] },
+    { id: 16, name: "Хризантема", shortDesc: "Абсолютная стойкость", longDesc: "Пышный цветок, способный оставаться свежим в вазе рекордное время.", image: "images/16", colors: [{hex: "#FAFAFA", name: "Белый"}, {hex: "#FFEB3B", name: "Желтый"}, {hex: "#AED581", name: "Светло-зеленый (филин грин)"}, {hex: "#F06292", name: "Розовый"}, {hex: "#880E4F", name: "Бордовый"}, {hex: "#CE93D8", name: "Сиреневый"}] },
+    { id: 17, name: "Экзотика", shortDesc: "Тропический микс", longDesc: "Редкие декоративные растения для самых необычных букетов.", image: "images/17" },
+    { id: 18, name: "Букет", shortDesc: "Авторская сборка", longDesc: "Гармоничная композиция, собранная профессиональным флористом.", image: "images/18" }
 ];
+
+let selectedFlowerColor = null; // Переменная для хранения выбранного цвета
 
 function renderFlowersGallery() {
     const galleryContainer = document.getElementById('flowers-gallery');
@@ -366,22 +368,59 @@ function openFlowerModal(flowerId) {
     const flower = flowersData.find(f => f.id === flowerId);
     if (!flower) return;
     
+    // Сброс предыдущего выбора цвета
+    selectedFlowerColor = null; 
+
     const modalImg = document.getElementById('flower-modal-img');
-    const baseImagePath = `images/${flower.id}`;
+    const baseImagePath = flower.image;
     
-    // Задаем базовый старт
     modalImg.src = `${baseImagePath}.jpg`;
-    
-    // Дублируем логику перебора для модалки
     modalImg.onerror = function() {
         if (this.src.endsWith('.jpg')) { this.src = `${baseImagePath}.png`; } 
         else if (this.src.endsWith('.png')) { this.src = `${baseImagePath}.JPG`; }
         else if (this.src.endsWith('.JPG')) { this.src = `${baseImagePath}.jpeg`; }
-        else { this.onerror = null; } // Останавливаем бесконечный цикл, если картинки вообще нет
+        else { this.onerror = null; } 
     };
 
     document.getElementById('flower-modal-title').innerText = flower.name;
     document.getElementById('flower-modal-desc').innerText = flower.longDesc;
+
+    // Логика отображения палитры
+    const colorsSection = document.getElementById('flower-colors-section');
+    const paletteContainer = document.getElementById('flower-color-palette');
+    
+    if (flower.colors && flower.colors.length > 0) {
+        colorsSection.classList.remove('hidden');
+        paletteContainer.innerHTML = ''; // Очищаем старые цвета
+        
+        flower.colors.forEach((colorObj, index) => {
+            const colorBox = document.createElement('div');
+            colorBox.classList.add('color-box');
+            colorBox.style.backgroundColor = colorObj.hex;
+            colorBox.title = colorObj.name; // Подсказка при наведении мышкой
+            
+            // Если это первый цвет, делаем его выбранным по умолчанию
+            if (index === 0) {
+                colorBox.classList.add('selected');
+                selectedFlowerColor = colorObj.name;
+            }
+
+            colorBox.onclick = function() {
+                // Убираем выделение со всех квадратиков
+                document.querySelectorAll('.color-box').forEach(box => box.classList.remove('selected'));
+                // Добавляем выделение на текущий
+                this.classList.add('selected');
+                selectedFlowerColor = colorObj.name; // Запоминаем цвет
+            };
+            
+            paletteContainer.appendChild(colorBox);
+        });
+    } else {
+        // Прячем секцию для "Экзотики" и "Букета"
+        colorsSection.classList.add('hidden');
+        paletteContainer.innerHTML = '';
+    }
+
     document.getElementById('flower-modal').classList.remove('hidden');
 }
 

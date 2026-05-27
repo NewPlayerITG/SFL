@@ -161,16 +161,27 @@
         </div>
     </div>
 
-    <div id="flower-modal" class="modal-overlay hidden" onclick="closeFlowerModal(event)">
-        <div class="flower-modal-content" onclick="event.stopPropagation()">
-            <img id="flower-modal-img" src="" alt="Цветок" class="flower-modal-image">
-            <div class="flower-modal-info">
+   <!-- МОДАЛЬНОЕ ОКНО ДЕТАЛЬНОГО ПРОСМОТРА ЦВЕТКА -->
+<div id="flower-modal" class="modal-overlay hidden" onclick="closeFlowerModal(event)">
+    <div class="flower-modal-content" onclick="event.stopPropagation()">
+        <img id="flower-modal-img" src="" alt="Цветок" class="flower-modal-image">
+        <div class="flower-modal-info">
+            
+            <div class="flower-text-wrapper">
                 <h2 id="flower-modal-title" class="flower-modal-title">Название</h2>
                 <p id="flower-modal-desc" class="flower-modal-text">Здесь будет длинное описание...</p>
-                <button class="btn-large-action" onclick="chooseFlowerAndGoToDate()">Выбрать</button>
             </div>
+
+            <!-- НОВЫЙ БЛОК ВЫБОРА ЦВЕТА -->
+            <div id="flower-colors-section" class="flower-colors-container hidden">
+                <p>Выберите оттенок:</p>
+                <div id="flower-color-palette" class="color-palette"></div>
+            </div>
+
+            <button class="btn-large-action" onclick="chooseFlowerAndGoToDate()">Выбрать</button>
         </div>
     </div>
+</div>
 
     <script src="script.js"></script>
 </body>
