@@ -35,22 +35,42 @@
     <div id="screen-fun" class="screen hidden">
         <div class="header"><h1>Куда идем?</h1></div>
         <div class="buttons">
-            <button onclick="navigate('screen-finish')">Гулять</button>
-            <button onclick="navigate('screen-finish')">Ходить по торговому центру</button>
-            <button onclick="navigate('screen-finish')">Поехали!</button>
+            <button onclick="navigate('screen-walk')">Гулять</button>
+            <button onclick="navigate('screen-malls')">Ходить по торговому центру</button>
+            <button onclick="navigate('screen-trips')">Поехали!</button>
         </div>
+    </div>
+
+    <div id="screen-walk" class="screen hidden">
+        <div class="header"><h1>Парки и улицы</h1></div>
+        <div class="scrollable-list" id="walk-container"></div>
+    </div>
+
+    <div id="screen-malls" class="screen hidden">
+        <div class="header"><h1>Торговые центры</h1></div>
+        <div class="scrollable-list" id="malls-container"></div>
+    </div>
+
+    <div id="screen-trips" class="screen hidden">
+        <div class="header"><h1>Поехали!</h1></div>
+        <div class="trips-flex-center" id="trips-container"></div>
     </div>
 
     <div id="screen-food" class="screen hidden">
         <div class="header"><h1>Какую кухню вы хотите сегодня?</h1></div>
         <div class="buttons">
-            <button onclick="navigate('screen-finish')">Кавказская</button>
-            <button onclick="navigate('screen-finish')">Русская</button>
-            <button onclick="navigate('screen-finish')">Японская</button>
-            <button onclick="navigate('screen-finish')">Итальянская</button>
-            <button onclick="navigate('screen-finish')">Американская</button>
-            <button onclick="navigate('screen-finish')">Рыбная</button>
+            <button onclick="openFoodCategory('Кавказская')">Кавказская</button>
+            <button onclick="openFoodCategory('Русская')">Русская</button>
+            <button onclick="openFoodCategory('Японская')">Японская</button>
+            <button onclick="openFoodCategory('Итальянская')">Итальянская</button>
+            <button onclick="openFoodCategory('Американская')">Американская</button>
+            <button onclick="openFoodCategory('Рыбная')">Рыбная</button>
         </div>
+    </div>
+
+    <div id="screen-food-list" class="screen hidden">
+        <div class="header"><h1 id="food-category-title">Рестораны</h1></div>
+        <div class="scrollable-list" id="food-list-container"></div>
     </div>
 
     <div id="screen-gifts" class="screen hidden">
@@ -64,18 +84,14 @@
     </div>
 
     <div id="screen-flowers" class="screen hidden">
-        <div class="header-gallery">
-            <h1>Выберите цветы</h1>
-        </div>
+        <div class="header-gallery"><h1>Выберите цветы</h1></div>
         <div class="gallery-wrapper">
             <div id="flowers-gallery" class="gallery-grid"></div>
         </div>
     </div>
 
     <div id="screen-finish" class="screen hidden">
-        <div class="header">
-            <h1>Приносим свои извинения. Идет ремонт 🚧</h1>
-        </div>
+        <div class="header"><h1>Приносим свои извинения. Идет ремонт 🚧</h1></div>
         <div class="buttons">
             <button id="btn-choose-date" onclick="openCalendar('edit')">Выбрать дату</button>
         </div>
@@ -94,7 +110,6 @@
                 <button class="btn-primary" onclick="handleLoginSubmit()">Войти</button>
             </div>
         </div>
-
         <div id="auth-view-register" class="modal-content auth-box hidden">
             <div class="auth-title">Регистрация</div>
             <div class="auth-stack">
@@ -107,12 +122,11 @@
                 <button class="btn-primary" onclick="handleRegisterSubmit()">Сохранить</button>
             </div>
         </div>
-
         <div id="auth-view-profile" class="modal-content auth-box hidden">
-            <div class="auth-title" id="profile-greeting">Привет, Пользователь!</div>
-            <p style="font-size: 14px; color: #7D9C87; text-align: center; margin-bottom: 20px;">Вы успешно авторизованы. Ваши даты синхронизированы.</p>
-            <button class="btn-primary" onclick="openCalendar('view')" style="width: 100%; margin-bottom: 10px;">Посмотреть мои планы</button>
-            <button class="btn-danger" onclick="handleLogout()" style="width: 100%;">Выйти из аккаунта</button>
+            <div class="auth-title" id="profile-greeting">Привет!</div>
+            <p style="font-size: 14px; color: #7D9C87; text-align: center; margin-bottom: 20px;">Вы авторизованы.</p>
+            <button class="btn-primary" onclick="openCalendar('view')" style="width: 100%; margin-bottom: 10px;">Посмотреть планы</button>
+            <button class="btn-danger" onclick="handleLogout()" style="width: 100%;">Выйти</button>
         </div>
     </div>
 
@@ -128,11 +142,9 @@
             </div>
             <div id="calendar-days" class="calendar-days"></div>
             <div class="modal-divider"></div>
-
             <div id="calendar-view-mode" class="hidden">
-                <div id="event-details-text">Выберите день, чтобы посмотреть планы.</div>
+                <div id="event-details-text">Выберите день.</div>
             </div>
-
             <div id="calendar-edit-mode">
                 <div class="time-picker-title">Выберите время (кликните для ввода)</div>
                 <div class="time-picker-container">
@@ -140,7 +152,7 @@
                         <div class="wheel-label">Часы</div>
                         <div class="wheel-relative-container">
                             <div id="wheel-hours" class="time-wheel"></div>
-                            <input type="number" id="input-hours" class="wheel-input hidden" min="0" max="23" placeholder="00">
+                            <input type="number" id="input-hours" class="wheel-input hidden" min="0" max="23">
                         </div>
                     </div>
                     <div class="time-wheel-separator">:</div>
@@ -148,11 +160,10 @@
                         <div class="wheel-label">Минуты</div>
                         <div class="wheel-relative-container">
                             <div id="wheel-minutes" class="time-wheel"></div>
-                            <input type="number" id="input-minutes" class="wheel-input hidden" min="0" max="59" placeholder="00">
+                            <input type="number" id="input-minutes" class="wheel-input hidden" min="0" max="59">
                         </div>
                     </div>
                 </div>
-
                 <div class="calendar-footer">
                     <button id="btn-reset-date" onclick="resetDateSelection()">Очистить</button>
                     <button id="btn-save-date" onclick="saveDateSelection()">Сохранить</button>
@@ -161,27 +172,52 @@
         </div>
     </div>
 
-   <!-- МОДАЛЬНОЕ ОКНО ДЕТАЛЬНОГО ПРОСМОТРА ЦВЕТКА -->
-<div id="flower-modal" class="modal-overlay hidden" onclick="closeFlowerModal(event)">
-    <div class="flower-modal-content" onclick="event.stopPropagation()">
-        <img id="flower-modal-img" src="" alt="Цветок" class="flower-modal-image">
-        <div class="flower-modal-info">
-            
-            <div class="flower-text-wrapper">
-                <h2 id="flower-modal-title" class="flower-modal-title">Название</h2>
-                <p id="flower-modal-desc" class="flower-modal-text">Здесь будет длинное описание...</p>
+    <div id="flower-modal" class="modal-overlay hidden" onclick="closeFlowerModal(event)">
+        <div class="flower-modal-content" onclick="event.stopPropagation()">
+            <img id="flower-modal-img" src="" alt="Цветок" class="flower-modal-image">
+            <div class="flower-modal-info">
+                <div class="flower-text-wrapper">
+                    <h2 id="flower-modal-title" class="flower-modal-title">Название</h2>
+                    <p id="flower-modal-desc" class="flower-modal-text">Описание...</p>
+                </div>
+                <div id="flower-colors-section" class="flower-colors-container hidden">
+                    <p>Выберите оттенок:</p>
+                    <div id="flower-color-palette" class="color-palette"></div>
+                </div>
+                <button class="btn-large-action" onclick="chooseFlowerAndGoToDate()">Выбрать</button>
             </div>
-
-            <!-- НОВЫЙ БЛОК ВЫБОРА ЦВЕТА -->
-            <div id="flower-colors-section" class="flower-colors-container hidden">
-                <p>Выберите оттенок:</p>
-                <div id="flower-color-palette" class="color-palette"></div>
-            </div>
-
-            <button class="btn-large-action" onclick="chooseFlowerAndGoToDate()">Выбрать</button>
         </div>
     </div>
-</div>
+
+    <div id="trip-info-modal" class="modal-overlay hidden" onclick="closeModal('trip-info-modal')">
+        <div class="flower-modal-content" onclick="event.stopPropagation()">
+            <img id="trip-modal-img" src="" alt="Поездка" class="flower-modal-image">
+            <div class="flower-modal-info">
+                <div class="flower-text-wrapper">
+                    <h2 id="trip-title" class="flower-modal-title">Название</h2>
+                    <p id="trip-desc" class="flower-modal-text">Описание достопримечательностей...</p>
+                </div>
+                <button class="btn-large-action" onclick="openMultiCalendar()">Выбрать даты</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="multi-calendar-modal" class="modal-overlay hidden" onclick="closeModal('multi-calendar-modal')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h2 style="text-align:center; color:#FAF0A5; margin-bottom:5px;">Даты поездки</h2>
+            <p style="text-align:center; color:#7D9C87; font-size:12px; margin-bottom:15px;">Выберите день заезда, затем день выезда (макс. 7 дней)</p>
+            
+            <div class="calendar-weekdays" style="margin-bottom: 5px;">
+                <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div>
+            </div>
+            <div id="multi-calendar-grid" class="calendar-days"></div>
+            
+            <div class="calendar-footer" style="margin-top:20px;">
+                <button id="btn-reset-date" onclick="closeModal('multi-calendar-modal')">Отмена</button>
+                <button id="btn-save-date" onclick="confirmMultiDateSelection()">Подтвердить</button>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
