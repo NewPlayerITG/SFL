@@ -3,6 +3,7 @@ const toast = document.getElementById('toast-notification');
 let historyStack = [];
 let toastTimer = null; 
 let selectedContextItem = ""; 
+let selectedMultiDays = []; // Для мульти-выбора (развлечения)
 
 // --- 1. БАЗЫ ДАННЫХ ---
 const walkPlaces = [
@@ -221,41 +222,21 @@ function openMultiCalendar() {
     document.getElementById('multi-calendar-modal').classList.remove('hidden');
 }
 
+// 1. ИСПРАВЛЕНИЕ: Выделение любого количества дней в календаре 'Развлечения'
 function handleMultiDayClick(dayNum) {
-    if (rangeStart && rangeEnd) { 
-        rangeStart = dayNum; 
-        rangeEnd = null; 
-    } 
-    else if (!rangeStart) { 
-        rangeStart = dayNum; 
-    } 
-    else if (rangeStart && !rangeEnd) {
-        if (dayNum >= rangeStart) {
-            // Проверка лимита: разница дней включительно не более 7 дней
-            if (dayNum - rangeStart + 1 > 7) {
-                showToast("Период поездки не может превышать 7 дней!");
-                return;
-            }
-            rangeEnd = dayNum;
-        } else {
-            if (rangeStart - dayNum + 1 > 7) {
-                showToast("Период поездки не может превышать 7 дней!");
-                return;
-            }
-            rangeEnd = rangeStart;
-            rangeStart = dayNum; 
-        }
+    const index = selectedMultiDays.indexOf(dayNum);
+    if (index > -1) {
+        selectedMultiDays.splice(index, 1); // Убираем, если кликнули повторно
+    } else {
+        selectedMultiDays.push(dayNum); // Добавляем в массив
     }
-    updateMultiCalendarVisuals(false); 
+    updateMultiCalendarVisuals();
 }
 
-function updateMultiCalendarVisuals(isConfirmed) {
-    const cells = document.querySelectorAll('#multi-calendar-grid .day-cell');
-    cells.forEach(cell => {
+function updateMultiCalendarVisuals() {
+    document.querySelectorAll('.day-cell').forEach(cell => {
         const d = parseInt(cell.dataset.day);
-        cell.classList.remove('in-range', 'confirmed');
-        if (rangeStart && d === rangeStart) cell.classList.add(isConfirmed ? 'confirmed' : 'in-range');
-        else if (rangeStart && rangeEnd && d >= rangeStart && d <= rangeEnd) cell.classList.add(isConfirmed ? 'confirmed' : 'in-range');
+        cell.classList.toggle('confirmed', selectedMultiDays.includes(d));
     });
 }
 
@@ -437,24 +418,47 @@ function resetDateSelection() {
 }
 
 function saveDateSelection() {
-    if (selectedDay === null) return showToast("Сначала выберите день!");
+    // ИСПРАВЛЕНИЕ: Теперь если день не выбран, мы явно говорим об этом пользователю
+    if (selectedDay === null) {
+        if (typeof showToast === 'function') {
+            showToast("Ошибка: Сначала выберите день на календаре!");
+        } else {
+            alert("Пожалуйста, выберите день на календаре перед сохранением.");
+        }
+        return; 
+    }
+
     const hEl = document.querySelector('#wheel-hours .active-time'); 
     const mEl = document.querySelector('#wheel-minutes .active-time');
     const timeStr = `${hEl ? hEl.innerText : "00"}:${mEl ? mEl.innerText : "00"}`;
-    const user = getCurrentUser(); const dateKey = `${currentYear}-${currentMonth}-${selectedDay}`;
+    const user = getCurrentUser(); 
+    const dateKey = `${currentYear}-${currentMonth}-${selectedDay}`;
 
     const eventName = selectedContextItem ? `${selectedContextItem} в ${timeStr}` : `Событие в ${timeStr}`;
 
     if (user) {
         if (!user.savedDates) user.savedDates = {};
-        user.savedDates[dateKey] = eventName; setCurrentUser(user);
-        const db = getUsersDB(); const uIdx = db.findIndex(u => u.username.toLowerCase() === user.username.toLowerCase());
-        if (uIdx !== -1) { db[uIdx].savedDates = user.savedDates; saveUsersDB(db); }
-        showToast(`Сохранено! (${selectedDay} ${monthsRu[currentMonth]} - ${eventName})`);
-    } else { showToast(`Даты выбраны временно. Войдите в аккаунт!`); }
+        if (!user.savedDates[dateKey]) user.savedDates[dateKey] = [];
+        
+        user.savedDates[dateKey].push(eventName);
+        setCurrentUser(user);
+        
+        const db = getUsersDB(); 
+        const uIdx = db.findIndex(u => u.username.toLowerCase() === user.username.toLowerCase());
+        if (uIdx !== -1) { 
+            db[uIdx].savedDates = user.savedDates; 
+            saveUsersDB(db); 
+        }
+        
+        if (typeof showToast === 'function') showToast("Событие успешно сохранено!");
+    } else { 
+        if (typeof showToast === 'function') showToast("Войдите в аккаунт для сохранения!"); 
+    }
     
     selectedContextItem = ""; 
-    selectedDay = null; renderCalendar(); closeModal('calendar-modal');
+    selectedDay = null; 
+    renderCalendar(); 
+    closeModal('calendar-modal');
 }
 
 function showToast(message) {
@@ -518,4 +522,135 @@ function setupWheelDragAndType(wheel, input, maxVal) {
         input.classList.add('hidden'); const itemHeight = 30; wheel.scrollTop = (maxVal + val) * itemHeight;
         setTimeout(() => handleActiveHighlight(wheel), 20);
     });
+}
+
+function openAdminPanel() {
+    const db = getUsersDB();
+    
+    // Считаем показатели для статистики
+    let totalUsers = db.length;
+    let totalEvents = 0;
+    
+    db.forEach(u => {
+        if (u.savedDates) {
+            Object.keys(u.savedDates).forEach(date => {
+                totalEvents += u.savedDates[date].length;
+            });
+        }
+    });
+
+    // Выводим статистику на экран
+    document.getElementById('stat-total-users').innerText = totalUsers;
+    document.getElementById('stat-total-events').innerText = totalEvents;
+
+    // Сбрасываем строку поиска при открытии панели
+    document.getElementById('admin-search-input').value = '';
+
+    // Генерируем список пользователей
+    renderAdminUsersList(db);
+
+    document.getElementById('admin-modal').classList.remove('hidden');
+}
+
+// 4. ЛОГИН АДМИНА
+function handleLoginSubmit() {
+    const userInp = document.getElementById('login-username').value;
+    const passInp = document.getElementById('login-password').value;
+
+    // Скрытый вход для админа
+    if (userInp === 'admin' && passInp === 'admin') {
+        openAdminPanel();
+        return;
+    }
+    // ... обычная логика авторизации пользователя ...
+}
+// Вспомогательная функция отрисовки списка
+function renderAdminUsersList(usersArray) {
+    const container = document.getElementById('admin-data-container');
+    container.innerHTML = '';
+
+    if (usersArray.length === 0) {
+        container.innerHTML = '<p class="no-events-text" style="text-align:center;">Пользователи не найдены.</p>';
+        return;
+    }
+
+    usersArray.forEach(u => {
+        // Пропускаем самого админа, чтобы случайно себя не удалить
+        if (u.username.toLowerCase() === 'admin') return;
+
+        const card = document.createElement('div');
+        card.className = 'admin-user-card';
+        card.dataset.searchString = `${u.name.toLowerCase()} ${u.username.toLowerCase()}`;
+
+        let cardHtml = `
+            <div class="admin-user-header" style="display: flex; justify-content: space-between; align-items: start;">
+                <div class="admin-user-info">${u.name} <span>(@${u.username})</span></div>
+                <button class="btn-delete-user" onclick="deleteUser('${u.username}')" style="background: #7a1a1a; color: #fff; border: 1px solid #b32424; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 12px;">Удалить</button>
+            </div>
+        `;
+        
+        const dates = Object.keys(u.savedDates || {});
+        if (dates.length === 0) {
+            cardHtml += `<div class="no-events-text">Нет запланированных событий</div>`;
+        } else {
+            cardHtml += `<div class="admin-user-events-list" style="margin-top: 10px;">`;
+            dates.sort().forEach(date => {
+                cardHtml += `
+                    <div class="admin-date-group">
+                        <div class="admin-date-title">Дата: ${date}</div>`;
+                u.savedDates[date].forEach(event => {
+                    cardHtml += `<div class="admin-event-bullet">• ${event}</div>`;
+                });
+                cardHtml += `</div>`;
+            });
+            cardHtml += `</div>`;
+        }
+
+        card.innerHTML = cardHtml;
+        container.appendChild(card);
+    });
+}
+
+// Функция мгновенного поиска (работает без перезапросов к БД)
+function filterAdminUsers() {
+    const query = document.getElementById('admin-search-input').value.toLowerCase().trim();
+    const cards = document.querySelectorAll('#admin-data-container .admin-user-card');
+
+    cards.forEach(card => {
+        const searchContent = card.dataset.searchString;
+        if (searchContent.includes(query)) {
+            card.classList.remove('hidden');
+        } else {
+            card.classList.add('hidden');
+        }
+    });
+}
+
+function deleteUser(username) {
+    // Спрашиваем подтверждение, чтобы не удалить случайно
+    if (!confirm(`Вы уверены, что хотите полностью удалить пользователя @${username} и все его даты?`)) {
+        return;
+    }
+
+    // Получаем текущую базу данных
+    let db = getUsersDB();
+
+    // Фильтруем массив, оставляя всех, кроме удаляемого пользователя
+    db = db.filter(u => u.username.toLowerCase() !== username.toLowerCase());
+
+    // Сохраняем обновленную базу обратно в localStorage
+    saveUsersDB(db);
+
+    // Если удалили того, под кем сейчас залогинены — разлогиниваем
+    const currentUser = getCurrentUser();
+    if (currentUser && currentUser.username.toLowerCase() === username.toLowerCase()) {
+        localStorage.removeItem('currentUser'); // или ваша функция logout()
+    }
+
+    // Обновляем данные на экране админа
+    openAdminPanel(); 
+    
+    if (typeof showToast === 'function') {
+        showToast("Пользователь успешно удален");
+    }
 }

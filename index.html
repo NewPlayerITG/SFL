@@ -166,7 +166,7 @@
                 </div>
                 <div class="calendar-footer">
                     <button id="btn-reset-date" onclick="resetDateSelection()">Очистить</button>
-                    <button id="btn-save-date" onclick="saveDateSelection()">Сохранить</button>
+                    <button type="button" class="btn-primary" onclick="saveDateSelection()">Сохранить</button>
                 </div>
             </div>
         </div>
@@ -218,7 +218,33 @@
             </div>
         </div>
     </div>
+<div id="admin-modal" class="modal-overlay hidden">
+    <div class="modal-content admin-dashboard">
+        <div class="admin-header">
+            <h2>Панель управления администратора</h2>
+            <span class="close-btn" onclick="closeModal('admin-modal')">&times;</span>
+        </div>
+        
+        <div class="admin-stats-grid">
+            <div class="admin-stat-card">
+                <span class="stat-label">Зарегистрировано пользователей</span>
+                <span id="stat-total-users" class="stat-number">0</span>
+            </div>
+            <div class="admin-stat-card">
+                <span class="stat-label">Всего запланировано событий</span>
+                <span id="stat-total-events" class="stat-number">0</span>
+            </div>
+        </div>
 
+        <div class="admin-search-wrapper">
+            <input type="text" id="admin-search-input" placeholder="Поиск пользователя по имени или @логину..." oninput="filterAdminUsers()">
+        </div>
+
+        <div id="admin-data-container" class="admin-users-list">
+            </div>
+    </div>
+</div>
     <script src="script.js"></script>
+
 </body>
 </html>

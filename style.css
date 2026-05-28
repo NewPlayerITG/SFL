@@ -202,3 +202,137 @@ p { margin: 0; font-size: 22px; color: #C2D6C8; font-weight: 500; }
     .flower-modal-info { width: 100%; padding: 20px; gap: 15px; }
     .flower-modal-title { font-size: 24px; }
 }
+.admin-user-card { background: #222; padding: 15px; margin-bottom: 10px; border-radius: 8px; color: #fff; }
+.admin-event-date { font-weight: bold; color: #ffcc00; margin-top: 5px; }
+.admin-event-item { margin-left: 15px; border-bottom: 1px solid #444; }
+.day-cell.confirmed { background-color: #4CAF50 !important; color: white; }
+/* Контейнер панели */
+.admin-dashboard {
+    max-width: 700px;
+    width: 95%;
+    background: #111e16;
+    border: 1px solid #385c42;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #233a2a;
+    padding-bottom: 14px;
+    margin-bottom: 20px;
+}
+
+.admin-header h2 {
+    margin: 0;
+    color: #FAF0A5;
+    font-size: 22px;
+}
+
+.close-btn {
+    font-size: 28px;
+    cursor: pointer;
+    color: #7d9c87;
+    transition: color 0.2s;
+}
+.close-btn:hover { color: #FAF0A5; }
+
+/* Карточки статистики */
+.admin-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.admin-stat-card {
+    background: #0a130e;
+    border: 1px solid #233a2a;
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.stat-label { display: block; color: #7d9c87; font-size: 13px; margin-bottom: 6px; }
+.stat-number { font-size: 24px; font-weight: bold; color: #FAF0A5; }
+
+/* Поле поиска */
+.admin-search-wrapper input {
+    width: 100%;
+    padding: 12px 16px;
+    background: #0a130e;
+    border: 1px solid #233a2a;
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 15px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+.admin-search-wrapper input:focus {
+    outline: none;
+    border-color: #437050;
+}
+
+/* Элементы списка */
+.admin-users-list {
+    max-height: 380px;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+.admin-user-card {
+    background: #0a130e;
+    border: 1px solid #233a2a;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
+    transition: transform 0.2s;
+}
+.admin-user-card:hover {
+    transform: translateY(-2px);
+}
+
+.admin-user-info {
+    font-size: 16px;
+    color: #FAF0A5;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.admin-user-info span {
+    color: #7d9c87;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.admin-date-group {
+    background: #111e16;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.admin-date-title {
+    font-size: 13px;
+    color: #7d9c87;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.admin-event-bullet {
+    font-size: 14px;
+    color: #ffffff;
+    padding-left: 8px;
+    position: relative;
+    margin-bottom: 4px;
+}
+
+.no-events-text {
+    color: #4e6355;
+    font-style: italic;
+    font-size: 14px;
+}
